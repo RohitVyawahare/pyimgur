@@ -1,6 +1,6 @@
 import requests
 
-from conf.constants import BASE_URL
+from props.constants import BASE_URL
 from utils.misc import get_user_config
 
 

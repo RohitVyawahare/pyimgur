@@ -1,7 +1,7 @@
 # Validate problem statement
 
-import conf.constants as cons
-import conf.properties as prop
+import props.constants as cons
+import props.properties as prop
 
 
 class TestUser1Account:

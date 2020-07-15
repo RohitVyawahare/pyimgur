@@ -1,6 +1,6 @@
 from pytest import fixture
 
-import conf.constants as cons
+import props.constants as cons
 from utils.imgur import Imgur
 
 
