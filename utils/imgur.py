@@ -15,3 +15,10 @@ class Imgur:
         self.comment = Comment(self.user)
         self.image = Image(self.user)
         self.gallery = Gallery(self.user)
+
+    def delete_all(self):
+        """delete all"""
+
+        self.comment.delete_all_comments()
+        self.album.delete_all_albums()
+        self.image.delete_all_images()

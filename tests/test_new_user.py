@@ -3,7 +3,7 @@
 class TestNewUser:
     """Validates that we are running tests on clean setup"""
 
-    def test_no_album_user1(self, user1):
+    def test_no_album_user1(self, setup, user1):
         assert user1.account.get_all_albums() == 0
 
     def test_no_album_user2(self, user2):
