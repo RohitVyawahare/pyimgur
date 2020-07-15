@@ -33,9 +33,6 @@ class Album:
         prop.ALBUM_HASH = response.json().get("data").get("id")
         return response
 
-    def publish_album(self):
-        pass
-
     def get_album_details(self, album_hash=None):
         """Get album details of album_hash if provided else use from properties.py"""
 
@@ -67,6 +64,21 @@ class Album:
         assert response.status_code == requests.codes.ok
         return response.json()
 
+    def list_album_images(self, album_hash=None):
+        """list of image ids under album_hash"""
+
+        image_ids = []
+        for block in self.get_album_images(album_hash).get("data"):
+            image_ids.append(block.get("id"))
+        return image_ids
+
+    def get_album_count(self):
+        """get total count of albums for self.user"""
+        headers = dict(Authorization='Bearer {}'.format(self.access_token))
+        response = requests.get(self.account.api_url + "/albums/count", headers=headers)
+        assert response.status_code == requests.codes.ok
+        return response.json().get("data")
+
     def delete_album(self, album_hash):
         """delete album for given hash"""
 
@@ -87,6 +99,14 @@ class Album:
         album_hash = album_hash if album_hash else prop.ALBUM_HASH
         headers = dict(Authorization='Bearer {}'.format(self.access_token))
         response = requests.post(self.api_url + album_hash + "/favorite", headers=headers)
+        assert response.status_code == requests.codes.ok
+        return response
+
+    def get_favourites(self):
+        """get favourites for user"""
+
+        headers = dict(Authorization="Client-ID {}".format(self.client_id))
+        response = requests.get(self.account.api_url + "/unorganized_favorites", headers=headers)
         assert response.status_code == requests.codes.ok
         return response
 
