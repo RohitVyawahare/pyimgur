@@ -13,7 +13,6 @@ class Gallery:
     def __init__(self, user):
         self.user = user
         self.api_url = BASE_URL + "gallery/"
-        self.account = Account(self.user)
 
         self.config = get_user_config(user)
         self.client_id = self.config.get("client_id")

@@ -26,8 +26,3 @@ def user1():
 @fixture(scope="module")
 def user2():
     return Imgur(cons.USER2)
-
-
-@fixture(scope="module")
-def user3():
-    return Imgur(cons.USER3)

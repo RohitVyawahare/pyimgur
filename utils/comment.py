@@ -3,7 +3,7 @@ import props.properties as prop
 from props.constants import BASE_URL
 
 from utils.account import Account
-from utils.misc import get_user_config
+from utils.misc import get_user_config, get_username
 
 
 class Comment:

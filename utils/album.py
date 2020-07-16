@@ -4,7 +4,7 @@ import props.properties as prop
 
 from props.constants import BASE_URL
 from utils.account import Account
-from utils.misc import get_user_config
+from utils.misc import get_user_config, get_username
 
 
 class Album:
@@ -75,7 +75,7 @@ class Album:
     def get_album_count(self):
         """get total count of albums for self.user"""
         headers = dict(Authorization='Bearer {}'.format(self.access_token))
-        response = requests.get(self.account.api_url + "/albums/count", headers=headers)
+        response = requests.get(self.account.api_url + get_username(self.account.account_id) + "/albums/count", headers=headers)
         assert response.status_code == requests.codes.ok
         return response.json().get("data")
 
@@ -106,7 +106,7 @@ class Album:
         """get favourites for user"""
 
         headers = dict(Authorization="Client-ID {}".format(self.client_id))
-        response = requests.get(self.account.api_url + "/unorganized_favorites", headers=headers)
+        response = requests.get(self.account.api_url + get_username(self.account.account_id) + "/unorganized_favorites", headers=headers)
         assert response.status_code == requests.codes.ok
         return response
 

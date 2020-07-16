@@ -2,14 +2,15 @@ import requests
 import props.properties as prop
 
 from props.constants import BASE_URL
-from utils.misc import get_user_config
-
+from utils.misc import get_user_config, get_username
+from utils.account import Account
 
 class Image:
     """Imgur Image utils"""
 
     def __init__(self, user):
         self.user = user
+        self.account = Account(self.user)
         self.config = get_user_config(user)
         self.client_id = self.config.get("client_id")
         self.access_token = self.config.get("access_token")
@@ -30,7 +31,7 @@ class Image:
         """get the data block for all images for self.user"""
 
         headers = dict(Authorization='Bearer {}'.format(self.access_token))
-        response = requests.get(BASE_URL + "account/" + self.user + "/images", headers=headers)
+        response = requests.get(BASE_URL + "account/" + get_username(self.account.account_id) + "/images", headers=headers)
         assert response.status_code == requests.codes.ok
         return response.json()
 

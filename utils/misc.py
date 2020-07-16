@@ -1,4 +1,5 @@
 import json
+import props.properties as prop
 
 from os import path
 
@@ -16,3 +17,8 @@ def get_user_config(user):
 
     return read_config().get(user)
 
+
+def get_username(account_id):
+    """return user name for account_id"""
+
+    return prop.USER_ID_MAPPING.get(account_id)

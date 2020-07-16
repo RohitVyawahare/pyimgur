@@ -7,7 +7,7 @@ try:
 
     # update username and get account details
     print(user1.account.update_username("rohitvyaw3").json())
-    user1 = Imgur("rohitvyaw3")
+
     print(user1.account.get_details().json())
 
     # create new album
@@ -37,7 +37,6 @@ except Exception:
 finally:
     # restore username
     print(user1.account.update_username("rohitvyaw1").json())
-    user1 = Imgur("rohitvyaw1")
     print(user1.account.get_details().json())
 
     # cleanup
