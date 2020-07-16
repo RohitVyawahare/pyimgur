@@ -49,9 +49,9 @@ Run command:
 
 # How to run tests
 
-Run command:
+Before running the following command make sure that you have created /tmp/conf and copied valid config.json inside it
 
-```docker run -v conf:/pyimgur/conf -v /tmp/report:/report rohitvyaw/pyimgur:latest```
+```docker run -v /tmp/conf:/pyimgur/conf -v /tmp/report:/report rohitvyaw/pyimgur:latest```
 
 Sample output:
 
@@ -87,7 +87,8 @@ tests/test_workflow.py::TestUser1Comment::test_restore_username PASSED
 ======================== 16 passed in 81.93s (0:01:21) =========================
 Please check report.html at /tmp/report
 ```
-Note that at the end of test execution, html report gets created as follows:
+
+Sample html report files/report.html
 
 
 # Pending items:
@@ -95,6 +96,7 @@ Note that at the end of test execution, html report gets created as follows:
 Note that this repository is _work-in-progress_. Following are high level pending items.
 
 - Schema validations
-- Negative tests
+- Negative tests/addtional tests as required
 - CI/CD integration? 
+- Misc enhancements
 
