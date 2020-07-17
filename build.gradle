@@ -1,0 +1,50 @@
+plugins {
+   id "org.ajoberstar.grgit" version "3.1.1"
+}
+
+task printProps {
+    doFirst {
+        println dockerRepo
+        println project_dtag
+    }
+}
+
+ext {
+   def findCurrentBranch = {
+      grgit.branch.current().getName()
+   }
+
+   def toDockerTag = { arg ->
+      arg.replaceAll('[+].*', '').replaceAll('-SNAPSHOT', '')
+   }
+   project_dtag = toDockerTag( System.getProperty("docker.tagVersion", findCurrentBranch()) )
+}
+
+task makeTestDocker (type:Exec) {
+    commandLine = [
+        "docker",
+        "build",
+        "-t", "${dockerRepo}:${project_dtag}",
+        "-f", "Dockerfile", "."
+    ]
+}
+
+task publishTestDocker(type: Exec, dependsOn: makeTestDocker) {
+    commandLine = [
+        "docker",
+        "push",
+        "${dockerRepo}:${project_dtag}"
+    ]
+}
+
+
+task testBackend(type: Exec, dependsOn: makeTestDocker) {
+   commandLine = [
+      "docker", "run",
+      "-t",
+      "--rm",
+      "-v", "${System.getProperty("user.dir")}/conf:/pyimgur/conf",
+      "-v", "${System.getProperty("user.dir")}/report:/report",
+      "${dockerRepo}:${project_dtag}"
+   ]
+}

@@ -7,9 +7,11 @@ Python implementation of Imgur using https://apidocs.imgur.com/?version=latest#3
 - Python3
 - Pytest
 - Docker/Containers
+- Gradle
 
 # Pre-requisites:
 
+- Gradle
 - Docker installation (Refer https://docs.docker.com/engine/install/)
 - config.json (This file basically json holds client id, client secret, access token, refresh token which is required for authentication and authorization)
 
@@ -36,6 +38,8 @@ Python implementation of Imgur using https://apidocs.imgur.com/?version=latest#3
 |  |-- misc.py              -> misc utils e.g. read config for user etc
 |-- .dockerignore           -> don't add conf/config.json to docker image
 |-- .gitignore              -> ignore pycache, conf/config.json etc
+|-- build.gradle            -> gradle script to make and publish docker image and run tests
+|-- gradle.properties       -> Specify your docker hub repository path
 |-- Dockerfile              -> Dockerfile to build image for the code. Used python:alpine image which is very lightweight
 |-- run.sh                  -> entry point for container
 |-- api.py                  -> just a test script for debugging
@@ -43,20 +47,23 @@ Python implementation of Imgur using https://apidocs.imgur.com/?version=latest#3
 
 # How to build:
 
-Run command:
+Run following command to build test docker image:
 
-```docker build -t rohitvyaw/pyimgur:latest .```
+```gradle makeTestDocker```
+
+Run following command to publish docker image:
+
+```gradle publishTestDocker```
 
 # How to run tests
 
 Before running the following command make sure that you have created /tmp/conf and copied valid config.json inside it
 
-```docker run -v /tmp/conf:/pyimgur/conf -v /tmp/report:/report rohitvyaw/pyimgur:latest```
+```gradle testBackend```
 
 Sample output:
 
 ```
-rohit@Rohits-MacBook-Pro ~/c/pyimgur> docker run -v conf:/pyimgur/conf rohitvyaw/pyimgur:latest
 Executing tests...
 ============================= test session starts ==============================
 platform linux -- Python 3.8.4, pytest-5.4.3, py-1.9.0, pluggy-0.13.1 -- /usr/local/bin/python
@@ -88,8 +95,7 @@ tests/test_workflow.py::TestUser1Comment::test_restore_username PASSED
 Please check report.html at /tmp/report
 ```
 
-Sample html report files/report.html
-
+Here is default pytest [Sample html report](https://github.com/RohitVyawahare/pyimgur/blob/master/files/report.html) that can be viewed in browser. 
 
 # Pending items:
 
